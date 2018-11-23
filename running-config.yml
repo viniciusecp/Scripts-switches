@@ -1,0 +1,37 @@
+---
+- hosts: ios_devices
+  gather_facts: no
+  connection: local
+
+  vars_prompt:
+  - name: "mgmt_username"
+    prompt: "Username"
+    private: no
+  - name: "mgmt_password"
+    prompt: "Password"
+
+  tasks:
+
+  - name: SYS | Define provider
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ mgmt_username }}"
+        password: "{{ mgmt_password }}"
+
+  - name: terminal length 0
+    asa_command:
+      provider: "{{ provider }}"
+      commands:
+        - "terminal length 0"
+
+  - name: show running-config
+    asa_command:
+      provider: "{{ provider }}"
+      commands:
+        - "show running-config"
+    register: config
+
+  #- debug: msg="{{ config.stdout }}"
+
+  - local_action: copy content={{ config }} dest=/home/vinicius/Desktop/{{ inventory_hostname }}_config.txt
