@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="css/signin.css") }}">
+    <title>Script Switches</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename="imagens/algar-icon.png") }}" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type='text/javascript'>
+        $(window).load(function(){
+          $('#validatedCustomFiletxt').change(function(){
+              var fileList = document.getElementById("validatedCustomFiletxt").files;
+              var names = "<ul class='list-group'>";
+              for(var i = 0; i < fileList.length; i++) {
+                  //Do something with individual files
+                  names = names + "<li class='list-group-item'>" +fileList[i].name + "</li>"
+              }
+              names = names + "</ul>"
+              document.getElementById("listNomestxt").innerHTML = names;
+          });
+          $('#validatedCustomFilecsv').change(function(){
+              var file = document.getElementById("validatedCustomFilecsv").files;
+              document.getElementById("labelcsv").innerHTML = file[0].name;
+          });
+        });
+
+    </script>
+
+	  </head>
+  <body>
+
+    {% block content %}
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <form class="was-validated" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+              {{ form.csrf_token }}
+              <center><img src="{{ url_for('static', filename="imagens/logo.png") }}" class="img-responsive"></center><br />
+              <center><h2 class="form-signin-heading">Show Vlan Range</h2></center>
+              {% if msg=="msg1" %}
+              <div class="alert alert-success" role="alert">
+                {{ "Processando..." }}
+              </div>
+              {% elif msg=="msg4" %}
+              <div class="alert alert-danger" role="alert">
+                {{ "Você esqueceu de anexar algum arquivo!" }}
+              </div>
+              {% elif msg[3]=="5" %}
+              <div class="alert alert-danger" role="alert">
+                {{ msg[5:] }}
+              </div>
+              {% endif %}
+
+              <label>Selecione os arquivos txt:</label><br />
+              {% if msg=="msg2" %}
+              <div class="alert alert-danger" role="alert">
+                {{ "Selecione apenas arquivos txt!" }}
+              </div>
+              {% endif %}
+              <div class="form-group custom-file">
+                <!-- <input type="file" name="txtFiles" accept=".txt" multiple> -->
+                <input type="file" name="txtFiles" class="custom-file-input" id="validatedCustomFiletxt" required accept=".txt" multiple>
+                <label class="custom-file-label" for="validatedCustomFiletxt" id="labeltxt" >Choose file...</label>
+              </div>
+              <div id="listNomestxt"></div>
+              <br />
+
+              <label>Selecione o arquivo csv com as vlans:</label>
+              <br />
+              {% if msg=="msg3" %}
+              <div class="alert alert-danger" role="alert">
+                {{ "Selecione apenas o arquivo csv!" }}
+              </div>
+              {% endif %}
+              <div class="form-group custom-file">
+                <!-- <input type="file" name="csvFiles" accept=".csv"> -->
+                <input type="file" name="csvFiles" class="custom-file-input" id="validatedCustomFilecsv" required accept=".csv">
+                <label class="custom-file-label" for="validatedCustomFilecsv" id="labelcsv" >Choose file...</label>
+              </div>
+              <br /><br />
+
+              <label>Lista de interfaces separadas por virgulas:</label>
+              <div class="form-group">
+                {% if msg=="msg6" %}
+                <div class="alert alert-danger" role="alert">
+                  {{ "Digite uma lista de interfaces válida!" }}
+                </div>
+                {% endif %}
+                {{ form.listInterfaces(class="form-control") }}
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-lg btn-primary btn-block">Enviar</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+
+      </div> <!-- /container -->
+    {% endblock %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename="js/bootstrap.min.js") }}" ></script>
+  </body>
+</html>

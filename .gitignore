@@ -5,6 +5,8 @@ inventory
 teste.py
 bkp-show-vlan.py
 
+web-interface/files/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

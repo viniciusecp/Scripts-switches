@@ -9,3 +9,4 @@ O script show-vlan.py normaliza os arquivos e apresenta todas as vlans existente
 
 O script show-vlan-range.py normaliza os arquivos e apresenta todas as vlans informadas no arquivo csv, este apresenta apenas interface do terminal.
 
+Dentro da pasta web-interface está o sistema funcionando com uma interface web utilizando o flask. Nela foi implementado o script show-vlan-range.
