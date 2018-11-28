@@ -30,8 +30,9 @@
       provider: "{{ provider }}"
       commands:
         - "show running-config"
+      timeout: 40
     register: config
 
   #- debug: msg="{{ config.stdout }}"
 
-  - local_action: copy content={{ config }} dest=/home/vinicius/Desktop/{{ inventory_hostname }}_config.txt
+  - local_action: copy content={{ config }} dest=/home/vinicius/Desktop/{{ inventory_hostname }}_config_ios.txt

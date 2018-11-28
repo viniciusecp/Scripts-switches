@@ -1,0 +1,38 @@
+---
+- hosts: dell_devices
+  gather_facts: no
+  connection: local
+
+  vars_prompt:
+  - name: "mgmt_username"
+    prompt: "Username"
+    private: no
+  - name: "mgmt_password"
+    prompt: "Password"
+
+  tasks:
+
+  - name: SYS | Define provider
+    set_fact:
+      provider:
+        host: "{{ inventory_hostname }}"
+        username: "{{ mgmt_username }}"
+        password: "{{ mgmt_password }}"
+
+  - name: terminal length 0
+    dellos9_command:
+      provider: "{{ provider }}"
+      commands:
+        - "terminal length 0"
+
+  - name: show running-config
+    dellos9_command:
+      provider: "{{ provider }}"
+      commands:
+        - "show running-config"
+      timeout: 40
+    register: config
+
+  #- debug: msg="{{ config.stdout }}"
+
+  - local_action: copy content={{ config }} dest=/home/vinicius/Desktop/{{ inventory_hostname }}_config_dell.txt
