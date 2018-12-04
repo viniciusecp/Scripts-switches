@@ -2,9 +2,6 @@ import os
 import xlwt
 import csv
 
-from functools import partial
-from tkinter import *
-
 def formatarIOS(path):
     fname = path
     file = open(fname, 'r')

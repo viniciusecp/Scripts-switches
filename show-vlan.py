@@ -1,7 +1,7 @@
 import os
 import xlwt
-from functools import partial
-from tkinter import *
+#from functools import partial
+#from tkinter import *
 
 def formatarIOS(path):
     fname = path
@@ -430,13 +430,13 @@ def escreverPlanilha(fpath, cabecalhoVlan, tabelaVlan, tabelaIpInterface, dicion
     '''ws.write(pularlinhas, 0, 'IPs', style0)
     ws.write(pularlinhas, 1, 'Interfaces', style0)'''
 
-    #vlanInicial = int(input('Vlan Inicial: '))
-    #vlanFinal = int(input('Vlan Final: '))
-    vlanInicial = int(edVlanInicial.get())
-    vlanFinal = int(edVlanFinal.get())
+    vlanInicial = int(input('Vlan Inicial: '))
+    vlanFinal = int(input('Vlan Final: '))
+    #vlanInicial = int(edVlanInicial.get())
+    #vlanFinal = int(edVlanFinal.get())
 
-    #listInterfacesMostrarAux = input('Lista de interfaces separadas por virgulas: ').split(',')
-    listInterfacesMostrarAux = edInterfaces.get().split(',')
+    listInterfacesMostrarAux = input('Lista de interfaces separadas por virgulas: ').split(',')
+    #listInterfacesMostrarAux = edInterfaces.get().split(',')
     listInterfacesMostrar = []
     for i in listInterfacesMostrarAux:
         listInterfacesMostrar.append(i.strip())
@@ -503,15 +503,15 @@ def escreverPlanilha(fpath, cabecalhoVlan, tabelaVlan, tabelaIpInterface, dicion
 
     # Salvando
     wb.save(fpath+'vlans.xls')
-    lb4["text"] = 'Planilha salva em:\n'+fpath+'vlans.xls'
-    #print('Planilha salva em:\n'+fpath+'vlans.xls')
+    #lb4["text"] = 'Planilha salva em:\n'+fpath+'vlans.xls'
+    print('Planilha salva em:\n'+fpath+'vlans.xls')
 
 def main():
 
     print("Processando...")
     #fpath = '/home/vinicius/Desktop/'
-    #fpath = input('Caminho da pasta: ')
-    fpath = edPath.get()
+    fpath = input('Caminho da pasta: ')
+    #fpath = edPath.get()
 
     caminhos = [os.path.join(fpath, nome) for nome in os.listdir(fpath)]
     arquivos = [arq for arq in caminhos if os.path.isfile(arq)]
@@ -557,8 +557,8 @@ def main():
     escreverPlanilha(fpath, cabecalhoVlan, tabelaVlan, tabelaIpInterface, dicionarioVlan)
 
 ############################################# INTERFACE GRAFICA
-#main()
-
+main()
+'''
 janela = Tk()
 janela.title("Show VLAN")
 
@@ -597,3 +597,4 @@ lb4.place(x=100, y=260)
 janela.geometry("360x330+800+100")
 
 janela.mainloop()
+'''
